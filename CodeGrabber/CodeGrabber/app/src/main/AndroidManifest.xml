@@ -33,6 +33,19 @@
             android:theme="@style/Theme.CodeGrabber" />
 
         <service
+            android:name=".CodeAccessibilityService"
+            android:label="Code Grabber"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <service
             android:name=".CodeListenerService"
             android:label="Code Grabber Listener"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
