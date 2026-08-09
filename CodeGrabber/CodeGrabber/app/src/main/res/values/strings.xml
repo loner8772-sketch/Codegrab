@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Code Grabber</string>
+    <string name="accessibility_service_description">Watches for WhatsApp notifications containing redeem codes and copies them to your clipboard automatically.</string>
 </resources>
