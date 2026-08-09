@@ -16,21 +16,24 @@ class MainActivity : AppCompatActivity() {
         val statusText = findViewById<TextView>(R.id.statusText)
         val grantButton = findViewById<Button>(R.id.grantButton)
 
-        val enabled = isNotificationServiceEnabled()
+        val enabled = isAccessibilityServiceEnabled()
         statusText.text = if (enabled) {
-            "Notification access: GRANTED\nListening for codes in the background."
+            "Accessibility access: GRANTED\nListening for codes in the background."
         } else {
-            "Notification access: NOT granted.\nTap the button below, find 'Code Grabber' in the list, and turn it on."
+            "Accessibility access: NOT granted.\nTap the button below, find 'Code Grabber' under Installed Apps (or Downloaded Apps), and turn it on."
         }
 
         grantButton.setOnClickListener {
-            startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
         }
     }
 
-    private fun isNotificationServiceEnabled(): Boolean {
-        val pkgName = packageName
-        val flat = Settings.Secure.getString(contentResolver, "enabled_notification_listeners")
-        return flat != null && flat.contains(pkgName)
+    private fun isAccessibilityServiceEnabled(): Boolean {
+        val expectedComponent = "$packageName/${CodeAccessibilityService::class.java.name}"
+        val flat = Settings.Secure.getString(
+            contentResolver,
+            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        )
+        return flat != null && flat.contains(expectedComponent)
     }
 }
